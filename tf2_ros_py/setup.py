@@ -29,5 +29,5 @@ setup(
         'This package contains the ROS Python bindings for the tf2 library.'
     ),
     license='BSD',
-    tests_require=['pytest']
+    tests_require=['pytest'],
 )

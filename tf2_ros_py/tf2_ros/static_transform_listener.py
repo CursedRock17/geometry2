@@ -30,9 +30,14 @@ from typing import Optional
 from typing import Union
 
 from rclpy.node import Node
+from rclpy.callback_groups import ReentrantCallbackGroup
+from rclpy.executors import SingleThreadedExecutor
+from rclpy.qos import DurabilityPolicy
+from rclpy.qos import HistoryPolicy
 from rclpy.qos import QoSProfile
 from tf2_ros.buffer import Buffer
 from tf2_msgs.msg import TFMessage
+from threading import Thread
 
 DEFAULT_TF_TOPIC = '/tf'
 DEFAULT_STATIC_TF_TOPIC = '/tf_static'
@@ -61,8 +66,31 @@ class StaticTransformListener:
         :param static_qos: A QoSProfile or a history depth to apply to tf_static subscribers.
         :param tf_static_topic: Which topic to listen to for static transforms.
         """
-        TransformListener(buffer, node, spin_thread, None, static_qos, DEFAULT_TF_TOPIC,
-                          tf_static_topic, True)
+        if static_qos is None:
+            static_qos = QoSProfile(
+                depth=100,
+                durability=DurabilityPolicy.TRANSIENT_LOCAL,
+                history=HistoryPolicy.KEEP_LAST,
+                )
+        self.buffer = buffer
+        self.node = node
+        # Default callback group is mutually exclusive, which would prevent waiting for transforms
+        # from another callback in the same group.
+        self.group = ReentrantCallbackGroup()
+
+        self.tf_static_sub = node.create_subscription(
+            TFMessage, tf_static_topic, self.static_callback, static_qos, callback_group=self.group)
+
+        if spin_thread:
+            self.executor = SingleThreadedExecutor()
+
+            def run_func():
+                self.executor.add_node(self.node)
+                self.executor.spin()
+                self.executor.remove_node(self.node)
+
+            self.dedicated_listener_thread = Thread(target=run_func)
+            self.dedicated_listener_thread.start()
 
     def __del__(self) -> None:
         if hasattr(self, 'dedicated_listener_thread') and hasattr(self, 'executor'):
