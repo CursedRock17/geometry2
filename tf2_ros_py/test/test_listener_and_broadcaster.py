@@ -36,6 +36,7 @@ from tf2_ros.buffer import Buffer
 from tf2_ros.transform_broadcaster import TransformBroadcaster
 from tf2_ros.static_transform_broadcaster import StaticTransformBroadcaster
 from tf2_ros.transform_listener import TransformListener
+from tf2_ros.static_transform_listener import StaticTransformListener
 from tf2_ros import ExtrapolationException
 
 
@@ -66,6 +67,8 @@ class TestBroadcasterAndListener:
         cls.broadcaster = TransformBroadcaster(cls.node)
         cls.static_broadcaster = StaticTransformBroadcaster(cls.node)
         cls.listener = TransformListener(
+            buffer=cls.buffer, node=cls.node, spin_thread=False)
+        cls.static_listener = StaticTransformListener(
             buffer=cls.buffer, node=cls.node, spin_thread=False)
 
         cls.executor = rclpy.executors.SingleThreadedExecutor()
