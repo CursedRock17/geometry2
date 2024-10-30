@@ -83,6 +83,7 @@ class TestBroadcasterAndListener:
     def setup_method(self, method):
         self.buffer = Buffer()
         self.listener.buffer = self.buffer
+        self.static_listener.buffer = self.buffer
 
     def broadcast_transform(self, target_frame, source_frame, time_stamp):
         broadcast_transform = build_transform(

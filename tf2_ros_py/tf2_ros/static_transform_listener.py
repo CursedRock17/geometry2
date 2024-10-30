@@ -1,5 +1,4 @@
-# Copyright (c) 2008, Willow Garage, Inc.
-# All rights reserved.
+# Copyright 2024, Open Source Robotics Foundation, Inc. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -25,7 +24,6 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# author: Wim Meeussen
 from typing import Optional
 from typing import Union
 
@@ -61,7 +59,7 @@ class StaticTransformListener:
         Constructor.
 
         :param buffer: The buffer to propagate changes to when tf info updates.
-        :param node: The ROS2 node.
+        :param node: The ROS 2 node.
         :param spin_thread: Whether to create a dedidcated thread to spin this node.
         :param static_qos: A QoSProfile or a history depth to apply to tf_static subscribers.
         :param tf_static_topic: Which topic to listen to for static transforms.
