@@ -258,20 +258,28 @@ public:
   /* Backwards compatability section for tf::Transformer you should not use these
    */
 
-  /**@brief Check if a frame exists in the tree
-   * @param frame_id_str The frame id in question  */
+  /**
+   * \brief Check if a frame exists in the tree.
+   *
+   * \param frame_id_str The frame id in question
+   */
   TF2_PUBLIC
   bool _frameExists(const std::string & frame_id_str) const;
 
-  /**@brief Fill the parent of a frame.
-   * @param frame_id The frame id of the frame in question
-   * @param time The timepoint of the frame in question
-   * @param parent The reference to the string to fill the parent
-   * Returns true unless "NO_PARENT" */
+  /**
+   * \brief Fill the parent of a frame..
+   *
+   * \param frame_id The frame id of the frame in question
+   * \param time The timepoint of the frame in question
+   * \param parent The reference to the string to fill the parent
+   * \return true unless "NO_PARENT"
+   */
   TF2_PUBLIC
   bool _getParent(const std::string & frame_id, TimePoint time, std::string & parent) const;
 
-  /** \brief A way to get a std::vector of available frame ids */
+  /**
+   * \brief A way to get a std::vector of available frame ids.
+   */
   TF2_PUBLIC
   void _getFrameStrings(std::vector<std::string> & ids) const;
 
@@ -304,11 +312,12 @@ public:
     return validateFrameId(function_name_arg, frame_id);
   }
 
-  /**@brief Get the duration over which this transformer will cache */
+  /** \brief Get the duration over which this transformer will cache.
+   */
   TF2_PUBLIC
   tf2::Duration getCacheLength() {return cache_time_;}
 
-  /** \brief Backwards compatabilityA way to see what frames have been cached
+  /** \brief Backwards compatabilityA way to see what frames have been cached.
    * Useful for debugging
    */
   TF2_PUBLIC
@@ -441,14 +450,19 @@ private:
     CompactFrameID source_frame, CompactFrameID target_frame,
     std::string * out) const;
 
-  /**@brief Return the latest rostime which is common across the spanning set
-   * zero if fails to cross */
+  /**
+   * \brief Return the latest rostime which is common across the spanning set.
+   *
+   * zero if fails to cross.
+   */
   tf2::TF2Error getLatestCommonTime(
     CompactFrameID target_frame, CompactFrameID source_frame,
     TimePoint & time, std::string * error_string) const;
 
-  /**@brief Traverse the transform tree. If frame_chain is not nullptr, store the traversed frame tree in vector frame_chain.
-   * */
+  /**
+   * \brief Traverse the transform tree. If frame_chain is not nullptr, store the traversed frame tree in vector frame_chain.
+   *
+   */
   template<typename F>
   tf2::TF2Error walkToTopParent(
     F & f, TimePoint time, CompactFrameID target_id,

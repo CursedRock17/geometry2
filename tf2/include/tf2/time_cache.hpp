@@ -52,7 +52,7 @@ public:
   TF2_PUBLIC
   virtual ~TimeCacheInterface() = default;
 
-  /** \brief Access data from the cache
+  /** \brief Access data from the cache.
    * returns false if data unavailable (should be thrown as lookup exception)
    */
   TF2_PUBLIC
@@ -60,11 +60,11 @@ public:
     tf2::TimePoint time, tf2::TransformStorage & data_out,
     std::string * error_str = 0, TF2Error * error_code = 0) = 0;
 
-  /** \brief Insert data into the cache */
+  /** \brief Insert data into the cache. */
   TF2_PUBLIC
   virtual bool insertData(const tf2::TransformStorage & new_data) = 0;
 
-  /** @brief Clear the list of stored values */
+  /** \brief Clear the list of stored values. */
   TF2_PUBLIC
   virtual void clearList() = 0;
 
@@ -80,15 +80,15 @@ public:
   virtual P_TimeAndFrameID getLatestTimeAndParent() = 0;
 
   /// Debugging information methods
-  /** @brief Get the length of the stored list */
+  /** \brief Get the length of the stored list */
   TF2_PUBLIC
   virtual unsigned int getListLength() = 0;
 
-  /** @brief Get the latest timestamp cached */
+  /** \brief Get the latest timestamp cached */
   TF2_PUBLIC
   virtual tf2::TimePoint getLatestTimestamp() = 0;
 
-  /** @brief Get the oldest timestamp cached */
+  /** \brief Get the oldest timestamp cached */
   TF2_PUBLIC
   virtual tf2::TimePoint getOldestTimestamp() = 0;
 };

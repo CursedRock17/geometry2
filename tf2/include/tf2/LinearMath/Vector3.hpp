@@ -3,8 +3,8 @@ Copyright (c) 2003-2006 Gino van den Bergen / Erwin Coumans  http://continuousph
 
 This software is provided 'as-is', without any express or implied warranty.
 In no event will the authors be held liable for any damages arising from the use of this software.
-Permission is granted to anyone to use this software for any purpose, 
-including commercial applications, and to alter it and redistribute it freely, 
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it freely,
 subject to the following restrictions:
 
 1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
@@ -31,7 +31,9 @@ namespace tf2
 
 
 
-/**@brief tf2::Vector3 can be used to represent 3D points and vectors.
+/**
+ * \brief tf2::Vector3 can be used to represent 3D points and vectors.
+ *
  * It has an un-used w component to suit 16-byte alignment when tf2::Vector3 is stored in containers. This extra component can be used by derived classes (Quaternion?) or by user
  * Ideally, this class should be replaced by a platform optimized TF2SIMD version that keeps the data in registers
  */
@@ -68,15 +70,19 @@ public:
 
 	public:
 
-  /**@brief No initialization constructor */
+  /**
+   * \brief No initialization constructor.
+   */
 	TF2SIMD_FORCE_INLINE Vector3() {}
 
- 
-	
-  /**@brief Constructor from scalars 
-   * @param x X value
-   * @param y Y value 
-   * @param z Z value 
+
+
+  /**
+   * \brief Constructor from scalars.
+   *
+   * \param x X value
+   * \param y Y value
+   * \param z Z value
    */
 	TF2SIMD_FORCE_INLINE Vector3(const tf2Scalar& x, const tf2Scalar& y, const tf2Scalar& z)
 	{
@@ -86,8 +92,11 @@ public:
 		m_floats[3] = tf2Scalar(0.);
 	}
 
-/**@brief Add a vector to this one 
- * @param The vector to add to this one */
+ /**
+  * \brief Add a vector to this one.
+  *
+  * \param The vector to add to this one
+  */
 	TF2SIMD_FORCE_INLINE Vector3& operator+=(const Vector3& v)
 	{
 
@@ -96,89 +105,130 @@ public:
 	}
 
 
-  /**@brief Sutf2ract a vector from this one
-   * @param The vector to sutf2ract */
-	TF2SIMD_FORCE_INLINE Vector3& operator-=(const Vector3& v) 
+ /**
+  * \brief Sutf2ract a vector from this one.
+  *
+  * \param The vector to sutf2ract
+  */
+	TF2SIMD_FORCE_INLINE Vector3& operator-=(const Vector3& v)
 	{
 		m_floats[0] -= v.m_floats[0]; m_floats[1] -= v.m_floats[1];m_floats[2] -= v.m_floats[2];
 		return *this;
 	}
-  /**@brief Scale the vector
-   * @param s Scale factor */
+
+  /**
+   * \brief Scale the vector.
+   *
+   * \param s Scale factor
+   */
 	TF2SIMD_FORCE_INLINE Vector3& operator*=(const tf2Scalar& s)
 	{
 		m_floats[0] *= s; m_floats[1] *= s;m_floats[2] *= s;
 		return *this;
 	}
 
-  /**@brief Inversely scale the vector 
-   * @param s Scale factor to divide by */
-	TF2SIMD_FORCE_INLINE Vector3& operator/=(const tf2Scalar& s) 
+  /**
+   * \brief Inversely scale the vector.
+   *
+   * \param s Scale factor to divide by
+   */
+	TF2SIMD_FORCE_INLINE Vector3& operator/=(const tf2Scalar& s)
 	{
 		tf2FullAssert(s != tf2Scalar(0.0));
 		return *this *= tf2Scalar(1.0) / s;
 	}
 
-  /**@brief Return the dot product
-   * @param v The other vector in the dot product */
+  /**
+   * \brief Return the dot product.
+   *
+   * \param v The other vector in the dot product
+   */
 	TF2SIMD_FORCE_INLINE tf2Scalar dot(const Vector3& v) const
 	{
 		return m_floats[0] * v.m_floats[0] + m_floats[1] * v.m_floats[1] +m_floats[2] * v.m_floats[2];
 	}
 
-  /**@brief Return the length of the vector squared */
+  /**
+   * \brief Return the length of the vector squared.
+   */
 	TF2SIMD_FORCE_INLINE tf2Scalar length2() const
 	{
 		return dot(*this);
 	}
 
-  /**@brief Return the length of the vector */
+  /**
+   * \brief Return the length of the vector.
+   */
 	TF2SIMD_FORCE_INLINE tf2Scalar length() const
 	{
 		return tf2Sqrt(length2());
 	}
 
-  /**@brief Return the distance squared between the ends of this and another vector
-   * This is symantically treating the vector like a point */
+  /**
+   * \brief Return the distance squared between the ends of this and another vector.
+   *
+   * This is symantically treating the vector like a point.
+   */
 	TF2SIMD_FORCE_INLINE tf2Scalar distance2(const Vector3& v) const;
 
-  /**@brief Return the distance between the ends of this and another vector
-   * This is symantically treating the vector like a point */
+  /**
+   * \brief Return the distance between the ends of this and another vector.
+   *
+   * This is symantically treating the vector like a point.
+   */
 	TF2SIMD_FORCE_INLINE tf2Scalar distance(const Vector3& v) const;
 
-  /**@brief Normalize this vector 
-   * x^2 + y^2 + z^2 = 1 */
-	TF2SIMD_FORCE_INLINE Vector3& normalize() 
+  /**
+   * \brief Normalize this vector.
+   *
+   * x^2 + y^2 + z^2 = 1
+   */
+	TF2SIMD_FORCE_INLINE Vector3& normalize()
 	{
 		return *this /= length();
 	}
 
-  /**@brief Return a normalized version of this vector */
+  /**
+   * \brief Return a normalized version of this vector.
+   */
 	TF2SIMD_FORCE_INLINE Vector3 normalized() const;
 
-  /**@brief Rotate this vector 
-   * @param wAxis The axis to rotate about 
-   * @param angle The angle to rotate by */
+  /**
+   * \brief Rotate this vector.
+   *
+   * \param wAxis The axis to rotate about
+   * \param angle The angle to rotate by
+   */
 	TF2SIMD_FORCE_INLINE Vector3 rotate( const Vector3& wAxis, const tf2Scalar angle ) const;
 
-  /**@brief Return the angle between this and another vector
-   * @param v The other vector */
-	TF2SIMD_FORCE_INLINE tf2Scalar angle(const Vector3& v) const 
+  /**
+   * \brief Return the angle between this and another vector.
+   *
+   * \param v The other vector
+   */
+	TF2SIMD_FORCE_INLINE tf2Scalar angle(const Vector3& v) const
 	{
 		tf2Scalar s = tf2Sqrt(length2() * v.length2());
 		tf2FullAssert(s != tf2Scalar(0.0));
 		return tf2Acos(dot(v) / s);
 	}
-  /**@brief Return a vector will the absolute values of each element */
-	TF2SIMD_FORCE_INLINE Vector3 absolute() const 
+
+  /**
+   * \brief Return a vector will the absolute values of each element.
+   */
+	TF2SIMD_FORCE_INLINE Vector3 absolute() const
 	{
 		return Vector3(
-			tf2Fabs(m_floats[0]), 
-			tf2Fabs(m_floats[1]), 
+			tf2Fabs(m_floats[0]),
+			tf2Fabs(m_floats[1]),
 			tf2Fabs(m_floats[2]));
 	}
-  /**@brief Return the cross product between this and another vector 
-   * @param v The other vector */
+
+  /**
+   * \brief Return the cross product between this and another vector.
+   *
+   * \param v The other vector
+   */
 	TF2SIMD_FORCE_INLINE Vector3 cross(const Vector3& v) const
 	{
 		return Vector3(
@@ -189,21 +239,27 @@ public:
 
 	TF2SIMD_FORCE_INLINE tf2Scalar triple(const Vector3& v1, const Vector3& v2) const
 	{
-		return m_floats[0] * (v1.m_floats[1] * v2.m_floats[2] - v1.m_floats[2] * v2.m_floats[1]) + 
-			m_floats[1] * (v1.m_floats[2] * v2.m_floats[0] - v1.m_floats[0] * v2.m_floats[2]) + 
+		return m_floats[0] * (v1.m_floats[1] * v2.m_floats[2] - v1.m_floats[2] * v2.m_floats[1]) +
+			m_floats[1] * (v1.m_floats[2] * v2.m_floats[0] - v1.m_floats[0] * v2.m_floats[2]) +
 			m_floats[2] * (v1.m_floats[0] * v2.m_floats[1] - v1.m_floats[1] * v2.m_floats[0]);
 	}
 
-  /**@brief Return the axis with the smallest value 
-   * Note return values are 0,1,2 for x, y, or z */
+  /**
+   * \brief Return the axis with the smallest value.
+   *
+   * Note return values are 0,1,2 for x, y, or z.
+   */
 	TF2SIMD_FORCE_INLINE int minAxis() const
 	{
 		return m_floats[0] < m_floats[1] ? (m_floats[0] <m_floats[2] ? 0 : 2) : (m_floats[1] <m_floats[2] ? 1 : 2);
 	}
 
-  /**@brief Return the axis with the largest value 
-   * Note return values are 0,1,2 for x, y, or z */
-	TF2SIMD_FORCE_INLINE int maxAxis() const 
+  /**
+   * \brief Return the axis with the largest value.
+   *
+   * Note return values are 0,1,2 for x, y, or z.
+   */
+	TF2SIMD_FORCE_INLINE int maxAxis() const
 	{
 		return m_floats[0] < m_floats[1] ? (m_floats[1] <m_floats[2] ? 2 : 1) : (m_floats[0] <m_floats[2] ? 2 : 0);
 	}
@@ -213,7 +269,7 @@ public:
 		return absolute().minAxis();
 	}
 
-	TF2SIMD_FORCE_INLINE int closestAxis() const 
+	TF2SIMD_FORCE_INLINE int closestAxis() const
 	{
 		return absolute().maxAxis();
 	}
@@ -228,48 +284,76 @@ public:
 		//		m_co[3] = s * v0[3] + rt * v1[3];
 	}
 
-  /**@brief Return the linear interpolation between this and another vector 
-   * @param v The other vector 
-   * @param t The ration of this to v (t = 0 => return this, t=1 => return other) */
-	TF2SIMD_FORCE_INLINE Vector3 lerp(const Vector3& v, const tf2Scalar& t) const 
+  /**
+   * \brief Return the linear interpolation between this and another vector.
+   *
+   * \param v The other vector
+   * \param t The ration of this to v (t = 0 => return this, t=1 => return other)
+   */
+	TF2SIMD_FORCE_INLINE Vector3 lerp(const Vector3& v, const tf2Scalar& t) const
 	{
 		return Vector3(m_floats[0] + (v.m_floats[0] - m_floats[0]) * t,
 			m_floats[1] + (v.m_floats[1] - m_floats[1]) * t,
 			m_floats[2] + (v.m_floats[2] -m_floats[2]) * t);
 	}
 
-  /**@brief Elementwise multiply this vector by the other 
-   * @param v The other vector */
+  /**
+   * \brief Elementwise multiply this vector by the other.
+   *
+   * \param v The other vector
+   */
 	TF2SIMD_FORCE_INLINE Vector3& operator*=(const Vector3& v)
 	{
 		m_floats[0] *= v.m_floats[0]; m_floats[1] *= v.m_floats[1];m_floats[2] *= v.m_floats[2];
 		return *this;
 	}
 
-	 /**@brief Return the x value */
+	 /**
+    * \brief Return the x value.
+    */
 		TF2SIMD_FORCE_INLINE const tf2Scalar& getX() const { return m_floats[0]; }
-  /**@brief Return the y value */
+  /**
+   * \brief Return the y value.
+   */
 		TF2SIMD_FORCE_INLINE const tf2Scalar& getY() const { return m_floats[1]; }
-  /**@brief Return the z value */
+  /**
+   * \brief Return the z value.
+   */
 		TF2SIMD_FORCE_INLINE const tf2Scalar& getZ() const { return m_floats[2]; }
-  /**@brief Set the x value */
+  /**
+   * \brief Set the x value.
+   */
 		TF2SIMD_FORCE_INLINE void	setX(tf2Scalar x) { m_floats[0] = x;};
-  /**@brief Set the y value */
+  /**
+   * \brief Set the y value.
+   */
 		TF2SIMD_FORCE_INLINE void	setY(tf2Scalar y) { m_floats[1] = y;};
-  /**@brief Set the z value */
+  /**
+   * \brief Set the z value.
+   */
 		TF2SIMD_FORCE_INLINE void	setZ(tf2Scalar z) {m_floats[2] = z;};
-  /**@brief Set the w value */
+  /**
+   * \brief Set the w value.
+   */
 		TF2SIMD_FORCE_INLINE void	setW(tf2Scalar w) { m_floats[3] = w;};
-  /**@brief Return the x value */
+  /**
+   * \brief Return the x value.
+   */
 		TF2SIMD_FORCE_INLINE const tf2Scalar& x() const { return m_floats[0]; }
-  /**@brief Return the y value */
+  /**
+   * \brief Return the y value.
+   */
 		TF2SIMD_FORCE_INLINE const tf2Scalar& y() const { return m_floats[1]; }
-  /**@brief Return the z value */
+  /**
+   * \brief Return the z value.
+   */
 		TF2SIMD_FORCE_INLINE const tf2Scalar& z() const { return m_floats[2]; }
-  /**@brief Return the w value */
+  /**
+   * \brief Return the w value.
+   */
 		TF2SIMD_FORCE_INLINE const tf2Scalar& w() const { return m_floats[3]; }
 
-	//TF2SIMD_FORCE_INLINE tf2Scalar&       operator[](int i)       { return (&m_floats[0])[i];	}      
+	//TF2SIMD_FORCE_INLINE tf2Scalar&       operator[](int i)       { return (&m_floats[0])[i];	}
 	//TF2SIMD_FORCE_INLINE const tf2Scalar& operator[](int i) const { return (&m_floats[0])[i]; }
 	///operator tf2Scalar*() replaces operator[], using implicit conversion. We added operator != and operator == to avoid pointer comparisons.
 	TF2SIMD_FORCE_INLINE	operator       tf2Scalar *()       { return &m_floats[0]; }
@@ -285,9 +369,11 @@ public:
 		return !(*this == other);
 	}
 
-	 /**@brief Set each element to the max of the current values and the values of another Vector3
-   * @param other The other Vector3 to compare with 
-   */
+	 /**
+    * \brief Set each element to the max of the current values and the values of another Vector3.
+    *
+    * \param other The other Vector3 to compare with
+    */
 		TF2SIMD_FORCE_INLINE void	setMax(const Vector3& other)
 		{
 			tf2SetMax(m_floats[0], other.m_floats[0]);
@@ -295,8 +381,11 @@ public:
 			tf2SetMax(m_floats[2], other.m_floats[2]);
 			tf2SetMax(m_floats[3], other.w());
 		}
-  /**@brief Set each element to the min of the current values and the values of another Vector3
-   * @param other The other Vector3 to compare with 
+
+  /**
+   * \brief Set each element to the min of the current values and the values of another Vector3.
+   *
+   * \param other The other Vector3 to compare with
    */
 		TF2SIMD_FORCE_INLINE void	setMin(const Vector3& other)
 		{
@@ -328,12 +417,12 @@ public:
 			setValue(tf2Scalar(0.),tf2Scalar(0.),tf2Scalar(0.));
 		}
 
-		TF2SIMD_FORCE_INLINE bool isZero() const 
+		TF2SIMD_FORCE_INLINE bool isZero() const
 		{
 			return m_floats[0] == tf2Scalar(0) && m_floats[1] == tf2Scalar(0) && m_floats[2] == tf2Scalar(0);
 		}
 
-		TF2SIMD_FORCE_INLINE bool fuzzyZero() const 
+		TF2SIMD_FORCE_INLINE bool fuzzyZero() const
 		{
 			return length2() < TF2SIMD_EPSILON;
 		}
@@ -352,48 +441,63 @@ public:
 
 };
 
-/**@brief Return the sum of two vectors (Point symantics)*/
-TF2SIMD_FORCE_INLINE Vector3 
-operator+(const Vector3& v1, const Vector3& v2) 
+/**
+ * \brief Return the sum of two vectors (Point symantics).
+ */
+TF2SIMD_FORCE_INLINE Vector3
+operator+(const Vector3& v1, const Vector3& v2)
 {
 	return Vector3(v1.m_floats[0] + v2.m_floats[0], v1.m_floats[1] + v2.m_floats[1], v1.m_floats[2] + v2.m_floats[2]);
 }
 
-/**@brief Return the elementwise product of two vectors */
-TF2SIMD_FORCE_INLINE Vector3 
-operator*(const Vector3& v1, const Vector3& v2) 
+/**
+ * \brief Return the elementwise product of two vectors.
+ */
+TF2SIMD_FORCE_INLINE Vector3
+operator*(const Vector3& v1, const Vector3& v2)
 {
 	return Vector3(v1.m_floats[0] * v2.m_floats[0], v1.m_floats[1] * v2.m_floats[1], v1.m_floats[2] * v2.m_floats[2]);
 }
 
-/**@brief Return the difference between two vectors */
-TF2SIMD_FORCE_INLINE Vector3 
+/**
+ * \brief Return the difference between two vectors.
+ */
+TF2SIMD_FORCE_INLINE Vector3
 operator-(const Vector3& v1, const Vector3& v2)
 {
 	return Vector3(v1.m_floats[0] - v2.m_floats[0], v1.m_floats[1] - v2.m_floats[1], v1.m_floats[2] - v2.m_floats[2]);
 }
-/**@brief Return the negative of the vector */
-TF2SIMD_FORCE_INLINE Vector3 
+
+/**
+ * \brief Return the negative of the vector.
+ */
+TF2SIMD_FORCE_INLINE Vector3
 operator-(const Vector3& v)
 {
 	return Vector3(-v.m_floats[0], -v.m_floats[1], -v.m_floats[2]);
 }
 
-/**@brief Return the vector scaled by s */
-TF2SIMD_FORCE_INLINE Vector3 
+/**
+ * \brief Return the vector scaled by s.
+ */
+TF2SIMD_FORCE_INLINE Vector3
 operator*(const Vector3& v, const tf2Scalar& s)
 {
 	return Vector3(v.m_floats[0] * s, v.m_floats[1] * s, v.m_floats[2] * s);
 }
 
-/**@brief Return the vector scaled by s */
-TF2SIMD_FORCE_INLINE Vector3 
+/**
+ * \brief Return the vector scaled by s.
+ */
+TF2SIMD_FORCE_INLINE Vector3
 operator*(const tf2Scalar& s, const Vector3& v)
-{ 
-	return v * s; 
+{
+	return v * s;
 }
 
-/**@brief Return the vector inversely scaled by s */
+/**
+ * \brief Return the vector inversely scaled by s.
+ */
 TF2SIMD_FORCE_INLINE Vector3
 operator/(const Vector3& v, const tf2Scalar& s)
 {
@@ -401,48 +505,60 @@ operator/(const Vector3& v, const tf2Scalar& s)
 	return v * (tf2Scalar(1.0) / s);
 }
 
-/**@brief Return the vector inversely scaled by s */
+/**
+ * \brief Return the vector inversely scaled by s.
+ */
 TF2SIMD_FORCE_INLINE Vector3
 operator/(const Vector3& v1, const Vector3& v2)
 {
 	return Vector3(v1.m_floats[0] / v2.m_floats[0],v1.m_floats[1] / v2.m_floats[1],v1.m_floats[2] / v2.m_floats[2]);
 }
 
-/**@brief Return the dot product between two vectors */
-TF2SIMD_FORCE_INLINE tf2Scalar 
-tf2Dot(const Vector3& v1, const Vector3& v2) 
-{ 
-	return v1.dot(v2); 
-}
-
-
-/**@brief Return the distance squared between two vectors */
+/**
+ * \brief Return the dot product between two vectors.
+ */
 TF2SIMD_FORCE_INLINE tf2Scalar
-tf2Distance2(const Vector3& v1, const Vector3& v2) 
-{ 
-	return v1.distance2(v2); 
+tf2Dot(const Vector3& v1, const Vector3& v2)
+{
+	return v1.dot(v2);
 }
 
 
-/**@brief Return the distance between two vectors */
+/**
+ * \brief Return the distance squared between two vectors.
+ */
 TF2SIMD_FORCE_INLINE tf2Scalar
-tf2Distance(const Vector3& v1, const Vector3& v2) 
-{ 
-	return v1.distance(v2); 
+tf2Distance2(const Vector3& v1, const Vector3& v2)
+{
+	return v1.distance2(v2);
 }
 
-/**@brief Return the angle between two vectors */
+
+/**
+ * \brief Return the distance between two vectors.
+ */
 TF2SIMD_FORCE_INLINE tf2Scalar
-tf2Angle(const Vector3& v1, const Vector3& v2) 
-{ 
-	return v1.angle(v2); 
+tf2Distance(const Vector3& v1, const Vector3& v2)
+{
+	return v1.distance(v2);
 }
 
-/**@brief Return the cross product of two vectors */
-TF2SIMD_FORCE_INLINE Vector3 
-tf2Cross(const Vector3& v1, const Vector3& v2) 
-{ 
-	return v1.cross(v2); 
+/**
+ * \brief Return the angle between two vectors.
+ */
+TF2SIMD_FORCE_INLINE tf2Scalar
+tf2Angle(const Vector3& v1, const Vector3& v2)
+{
+	return v1.angle(v2);
+}
+
+/**
+ * \brief Return the cross product of two vectors.
+ */
+TF2SIMD_FORCE_INLINE Vector3
+tf2Cross(const Vector3& v1, const Vector3& v2)
+{
+	return v1.cross(v2);
 }
 
 TF2SIMD_FORCE_INLINE tf2Scalar
@@ -451,11 +567,14 @@ tf2Triple(const Vector3& v1, const Vector3& v2, const Vector3& v3)
 	return v1.triple(v2, v3);
 }
 
-/**@brief Return the linear interpolation between two vectors
- * @param v1 One vector 
- * @param v2 The other vector 
- * @param t The ration of this to v (t = 0 => return v1, t=1 => return v2) */
-TF2SIMD_FORCE_INLINE Vector3 
+/**
+ * \brief Return the linear interpolation between two vectors.
+ *
+ * \param v1 One vector
+ * \param v2 The other vector
+ * \param t The ration of this to v (t = 0 => return v1, t=1 => return v2)
+ */
+TF2SIMD_FORCE_INLINE Vector3
 lerp(const Vector3& v1, const Vector3& v2, const tf2Scalar& t)
 {
 	return v1.lerp(v2, t);
@@ -476,7 +595,7 @@ TF2SIMD_FORCE_INLINE tf2Scalar Vector3::distance(const Vector3& v) const
 TF2SIMD_FORCE_INLINE Vector3 Vector3::normalized() const
 {
 	return *this / length();
-} 
+}
 
 TF2SIMD_FORCE_INLINE Vector3 Vector3::rotate( const Vector3& wAxis, const tf2Scalar angle ) const
 {
@@ -498,18 +617,18 @@ public:
 	TF2SIMD_FORCE_INLINE tf2Vector4() {}
 
 
-	TF2SIMD_FORCE_INLINE tf2Vector4(const tf2Scalar& x, const tf2Scalar& y, const tf2Scalar& z,const tf2Scalar& w) 
+	TF2SIMD_FORCE_INLINE tf2Vector4(const tf2Scalar& x, const tf2Scalar& y, const tf2Scalar& z,const tf2Scalar& w)
 		: Vector3(x,y,z)
 	{
 		m_floats[3] = w;
 	}
 
 
-	TF2SIMD_FORCE_INLINE tf2Vector4 absolute4() const 
+	TF2SIMD_FORCE_INLINE tf2Vector4 absolute4() const
 	{
 		return tf2Vector4(
-			tf2Fabs(m_floats[0]), 
-			tf2Fabs(m_floats[1]), 
+			tf2Fabs(m_floats[0]),
+			tf2Fabs(m_floats[1]),
 			tf2Fabs(m_floats[2]),
 			tf2Fabs(m_floats[3]));
 	}
@@ -543,9 +662,9 @@ public:
 		{
 			maxIndex = 3;
 		}
-		
-		
-		
+
+
+
 
 		return maxIndex;
 
@@ -575,39 +694,44 @@ public:
 		{
 			minIndex = 3;
 		}
-		
+
 		return minIndex;
 
 	}
 
 
-	TF2SIMD_FORCE_INLINE int closestAxis4() const 
+	TF2SIMD_FORCE_INLINE int closestAxis4() const
 	{
 		return absolute4().maxAxis4();
 	}
 
-	
- 
 
-  /**@brief Set x,y,z and zero w 
-   * @param x Value of x
-   * @param y Value of y
-   * @param z Value of z
+
+
+  /**
+   * \brief Set x,y,z and zero w.
+   *
+   * \param x Value of x
+   * \param y Value of y
+   * \param z Value of z
    */
-		
 
-/*		void getValue(tf2Scalar *m) const 
+
+/*		void getValue(tf2Scalar *m) const
 		{
 			m[0] = m_floats[0];
 			m[1] = m_floats[1];
 			m[2] =m_floats[2];
 		}
 */
-/**@brief Set the values 
-   * @param x Value of x
-   * @param y Value of y
-   * @param z Value of z
-   * @param w Value of w
+
+  /**
+   * \brief Set the values.
+   *
+   * \param x Value of x
+   * \param y Value of y
+   * \param z Value of z
+   * \param w Value of w
    */
 		TF2SIMD_FORCE_INLINE void	setValue(const tf2Scalar& x, const tf2Scalar& y, const tf2Scalar& z,const tf2Scalar& w)
 		{

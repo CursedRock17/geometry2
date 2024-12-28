@@ -109,8 +109,8 @@ public:
 
 
   /** \brief Add a set of values and an output to the iteration
-   * @param values The set of possible values for this output
-   * @param output The value to set at each iteration
+   * \param values The set of possible values for this output
+   * \param output The value to set at each iteration
    */
   template<class T>
   void addOptionSet(const std::vector<T> & values, T * output)
