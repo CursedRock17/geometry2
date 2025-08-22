@@ -463,11 +463,9 @@ void doTransform(
   geometry_msgs::msg::Polygon & poly_out,
   const geometry_msgs::msg::TransformStamped & transform)
 {
-  poly_out.points.clear();
-  for (auto & point : poly_in.points) {
-    geometry_msgs::msg::Point32 point_transformed;
-    doTransform(point, point_transformed, transform);
-    poly_out.points.push_back(point_transformed);
+  poly_out.points.resize(poly_in.points.size());
+  for (size_t i = 0; i < poly_in.points.size(); i++) {
+    doTransform(poly_in.points[i], poly_out.points[i], transform);
   }
 }
 
